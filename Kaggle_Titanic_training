@@ -10,7 +10,7 @@ from collections import Counter                      # don't need?
 import warnings
 warnings.filterwarnings('ignore')
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV      #Interesting and important thing. Work with it more later
 from sklearn.metrics import make_scorer
 from sklearn.metrics import accuracy_score
 
