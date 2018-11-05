@@ -30,27 +30,10 @@ from sklearn.model_selection import train_test_split
 from sklearn import model_selection
 from sklearn.metrics import accuracy_score
 
-
-data = []   #vis using plotly   prep the data for plot
-for asset in np.random.choice(market_train['assetName'].unique(),10):
-    asset_df = market_train[(market_train['assetName'] == asset)]
-    data.append(go.Scatter(
-    x = asset_df['time'].dt.strftime(date_format = '%Y-%m-%d').values,
-    y = asset_df['close'].values,
-    name = asset
-))
-layout = go.Layout(dict(title = 'Closing values of 10 random stocks',   #part dedicated to the plot
-                      xaxis = dict(title = 'Timeframe'),
-                      yaxis = dict(title = 'prices(USD)'),
-                      ), legend = dict(orientation='h'))
-py.iplot(dict(data = data, layout= layout))
-
 #checking data for outliers
 market_train['price_diff'] = market_train['close'] - market_train['open']  
 market_train.sort_values('price_diff')
 market_train['close_to_open'] = np.abs(market_train['close']) / (market_train['open'])
-print((market_train['close_to_open'] >= 2).sum())
-print((market_train['close_to_open'] <=0.5).sum())
 
 #Substitute values of open and close prices, if they are too big or too small. Placing mean values instead.
 market_train['assetName_open_mean'] = market_train.groupby('assetName')['open'].transform('mean')
@@ -65,63 +48,6 @@ for i, row in market_train.loc[market_train['close_to_open'] <= 0.5].iterrows():
         market_train.iloc[i,5] = row['assetName_open_mean']
     else:
         market_train.iloc[i,4] = row['assetName_close_mean']
-
-market_train.head()
-
-
-#wordcloud. finally, i know where those pictures come from
-text = ' '.join(news_train['headline'].str.lower().values[-100000:])
-wordcloud = WordCloud(max_font_size = None, stopwords = stop, background_color = 'white',
-                     width = 1200, height = 1000).generate(text)
-plt.figure(figsize=(12, 8))
-plt.imshow(wordcloud)
-plt.title('Top words in headline')
-plt.axis('off')
-plt.show()
-
-
-#another plotly example. time and changes in prices
-market_train['price_diff'] = market_train['close'] - market_train['open']
-grouped = market_train.groupby(['time']).agg({'price_diff':['std', 'min']}).reset_index()
-g = grouped.sort_values(('price_diff', 'std'), ascending=False)[:7]
-g['min_text']= 'Maximum price drop: ' + (-1 * np.round(g['price_diff']['min'], 2)).astype(str)
-trace = go.Scatter(
-    x = g['time'].dt.strftime(date_format='%Y-%m-%d').values,
-    y = g['price_diff']['std'].values,
-    mode='markers',
-    marker = dict(
-        size = g['price_diff']['std'].values *5,
-        color = g['price_diff']['std'].values,
-        colorscale = 'Portland',
-        showscale = True   
-    ),
-    text = g['min_text'].values
-)
-data = [trace]
-layout= go.Layout(
-    autosize= True,
-    title= 'Top 10 months by standard deviation of price change within a day',
-    hovermode= 'closest',
-    yaxis=dict(
-        title= 'price_diff',
-        ticklen= 5,
-        gridwidth= 2,
-    ),
-    showlegend= False
-)
-fig = go.Figure(data=data, layout=layout)
-py.iplot(fig,filename='scatter2010')
-
-
-#sentiments in news data
-for i, j in zip([-1, 0 ,1], ['positive', 'neutral', 'negative']):
-    sentiment = news_train.loc[news_train['sentimentClass'] == i, 'assetName']
-    print(f'Top mentioned companies for {j} sentiment are:')
-    print(sentiment.value_counts().head(20))
-    print(' ')
-
-
-
 
 #start modelling. data preparation function. work with 2 new dataframes and then use them
 #to create simple binary model, predicting whether stock prices go up or down after the news
@@ -169,3 +95,49 @@ mins = np.min(X, axis=0)
 maxs = np.max(X, axis=0)
 rng = maxs - mins
 X = 1 - ((maxs - X) / rng)
+
+
+#splitting the data and model using XGB. I was surprised by how important parameters are
+X_train, X_test, up_train, up_test, r_train, r_test = model_selection.train_test_split(X, up, r, test_size = 0.1, random_state = 99)
+xgb_up = XGBClassifier(n_jobs = 4,
+                      n_estimators = 300,
+                      max_depth = 2,
+                      eta = 0.05)
+
+%%time
+xgb_up.fit(X_train, up_train)
+print('Accuracy score: ', accuracy_score(xgb_up.predict(X_test), up_test))
+
+#finally. getting next days and submitting
+import time
+days = env.get_prediction_days()
+n_days = 0
+prep_time = 0
+packaging_time = 0
+prediction_time = 0
+for (market_obs_df, news_obs_df, prediction_template_df) in days:
+    n_days +=1
+    if n_days % 50 == 0:
+        print(n_days, end=' ')
+    
+    t = time.time()
+    market_obs_df = data_prep(market_obs_df, news_obs_df)
+    market_obs_df = market_obs_df[market_obs_df.assetCode.isin(prediction_template_df.assetCode)]
+    X_live = market_obs_df[fcol].values
+    X_live = 1 - ((maxs - X_live)/rnge)
+    prep_time += time.time() - t
+    
+    t = time.time()
+    lp = xgb_up.predict_proba(X_live)
+    prediction_time += time.time() - t
+    
+    t = time.time()
+    confidence = 2* lp[:,1] -1
+    predictions = pd.DataFrame({'assetCode': market_obs_df['assetCode'], 'confidence': confidence})
+    prediction_template_df = prediction_template_df.merge(predictions, 
+                                                            how='left').drop('confidenceValue',
+                                                            axis=1).fillna(0).rename(columns={'confidence':'confidenceValue'})
+    env.predict(prediction_template_df)
+    packaging_time += time.time() -t
+    
+env.write_submission_file()
