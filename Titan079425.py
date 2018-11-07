@@ -87,8 +87,8 @@ IDtest = test["PassengerId"]
 #print(test.isnull().sum())        temporary here
 
 
-kfold = StratifiedKFold(n_splits=10)      #some comparative tool for different algorithms
-random_state = 2
+kfold = StratifiedKFold(n_splits=8)      #some comparative tool for different algorithms
+random_state = 4
 classifiers = []
 classifiers.append(SVC(random_state=random_state))
 classifiers.append(DecisionTreeClassifier(random_state=random_state))
@@ -119,12 +119,12 @@ RFC = RandomForestClassifier(n_estimators=200, max_depth=2,
 RFCmodel = RFC.fit(X_train, Y_train)
 Search grid for optimal parameters
 rf_param_grid = {"max_depth": [None],
-              "max_features": [1, 5, 15],
-              "min_samples_split": [1, 5, 15],
-              "min_samples_leaf": [1, 5, 15],
+              "max_features": [2, 6, 15],
+              "min_samples_split": [2, 3, 6],
+              "min_samples_leaf": [2, 3, 5],
               "bootstrap": [False],
-              "n_estimators" :[100, 300],
-              "criterion": ["gini"]}
+              "n_estimators" : [400],
+              "criterion": ["entropy"]}
 gsRFC = GridSearchCV(RFC,param_grid = rf_param_grid, cv=kfold, scoring="accuracy", n_jobs= 4, verbose = 1)
 gsRFC.fit(X_train,Y_train)
 RFC_best = gsRFC.best_estimator_
