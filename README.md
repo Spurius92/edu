@@ -6,8 +6,10 @@ something like ToDo list.
 
 2. Human Protein Atlas.. same.
 
-3. Finally finish mathematical education.
+3. Google analytics customer revenue prediction finish in 16 days
 
-4. Do i need to keep up with the university? I feel it is useless.
+4. Finally finish mathematical education.
 
-5. Get the money somewhere to buy a new laptop til the end of the year.
+5. Do i need to keep up with the university? I feel it is useless.
+
+6. Get the money somewhere to buy a new laptop til the end of the year.
