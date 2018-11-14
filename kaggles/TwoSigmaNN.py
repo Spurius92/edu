@@ -1,14 +1,12 @@
-from kaggle.competitions import twosigmanews
-env = twosigmanews.make_env()
-(market, news) = env.get_training_data()
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 from sklearn.metrics import accuracy_score
-
 from sklearn.model_selection import train_test_split
+from kaggle.competitions import twosigmanews
+env = twosigmanews.make_env()
+(market, news) = env.get_training_data()
 #market = market.dropna()
 cat_cols = ['assetCode']
 num_cols = ['volume', 'close', 'open', 'returnsClosePrevRaw1', 'returnsOpenPrevRaw1', 'returnsClosePrevMktres1',
