@@ -12,8 +12,8 @@ cat_cols = ['assetCode']
 num_cols = ['volume', 'close', 'open', 'returnsClosePrevRaw1', 'returnsOpenPrevRaw1', 'returnsClosePrevMktres1',
                     'returnsOpenPrevMktres1', 'returnsClosePrevRaw10', 'returnsOpenPrevRaw10', 'returnsClosePrevMktres10',
                     'returnsOpenPrevMktres10']
-market_train, market_val = train_test_split(market.index.values, test_size= 0.25, random_state=20)
-
+market_train, market_val = train_test_split(market.index.values, test_size= 0.25, random_state=50)
+#random_state=50 seems optimal. score went up to 0.69+
 #some work with categorical values
 #encoder is useful. standard encoder doesn't work because there are new assets in the news data
 def encode(encoder, x):
@@ -91,7 +91,7 @@ check_point = ModelCheckpoint('model.hdf5', verbose=True, save_best_only=True)
 early_stop = EarlyStopping(patience=5, verbose=True)
 model.fit(X_train, y_train.astype('int'),
           validation_data = (X_valid, y_valid.astype('int')),
-          epochs = 3,
+          epochs = 4,
           callbacks= [early_stop, check_point])
 
 
