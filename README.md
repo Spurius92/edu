@@ -6,7 +6,7 @@ something like ToDo list.
 
 2. Human Protein Atlas.. same.
 
-3. Google analytics customer revenue prediction finish in 16 days
+3. Failed :)
 
 4. Finally finish mathematical education.
 
