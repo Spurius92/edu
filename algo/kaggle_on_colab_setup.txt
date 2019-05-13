@@ -1,0 +1,15 @@
+!pip install -q kaggle
+from google.colab import files
+files.upload()   # здесь ваш json
+!mkdir ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+!kaggle competitions download -c pass-cmu-dl-together-homework-1-part-2-spring-19
+!mkdir data
+!unzip \*.zip -d data
+# wsj_loader.py загружаете аналогично
+!ls data/
+
+#google drive
+from google.colab import drive
+drive.mount('./drive')
