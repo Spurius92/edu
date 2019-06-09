@@ -1,5 +1,9 @@
 # Useful notes about using docker
 
+`1b7ab9790fc7` is a container id
+
+`jupyter/scipy-notebook` - docker image from hub
+
 1. `docker exec -it 1b7ab9790fc7 bash` run shell inside a container
 
 2. `docker cp wine.data 1b7ab9790fc7:/home/jovyan/wine.data` copy data from the disk into container

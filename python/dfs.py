@@ -2,7 +2,7 @@
 # лекция 22 от Хирьянова
 # "Call all friends"
 
-# G = graph. Dictiioary with pairs of verteces and their coordinates
+# G = graph. Dictionary with pairs of verteces and their coordinates
 def dfs(vertex, G, used):
 	# used = used or set()
 	used.add(vertex)

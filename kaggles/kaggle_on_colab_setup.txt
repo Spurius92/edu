@@ -1,14 +1,17 @@
-!pip install -q kaggle
+# Colab's file access feature
 from google.colab import files
-files.upload()   # здесь ваш json
-!mkdir ~/.kaggle
-!cp kaggle.json ~/.kaggle/
-!chmod 600 ~/.kaggle/kaggle.json
-!kaggle competitions download -c pass-cmu-dl-together-homework-1-part-2-spring-19
-!mkdir data
-!unzip \*.zip -d data
-# wsj_loader.py загружаете аналогично
-!ls data/
+
+#retrieve uploaded file
+uploaded = files.upload()
+
+#print results
+for fn in uploaded.keys():
+  print('User uploaded file "{name}" with length {length} bytes'.format(
+      name=fn, length=len(uploaded[fn])))
+  
+# Then move kaggle.json into the folder where the API expects to find it.
+!mkdir -p ~/.kaggle/ && mv kaggle.json ~/.kaggle/ && chmod 600 ~/.kaggle/kaggle.json
+
 
 #google drive
 from google.colab import drive
