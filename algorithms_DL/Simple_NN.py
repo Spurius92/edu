@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class SimpleNet:
     def __init__(self, input_size, output_size):
         '''
@@ -16,9 +19,5 @@ class SimpleNet:
         b = self.b
         N, D = X.shape
 
-        y_1 = np.dot(X, W) + b # dot product
-        y[y < 0] = 0  # ReLU 
-
-        
-
-        
+        y_1 = np.dot(X, W) + b  # dot product
+        y[y < 0] = 0  # ReLU

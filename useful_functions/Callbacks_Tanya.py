@@ -2,9 +2,9 @@ from sklearn.metrics import roc_auc_score
 from keras.callbacks import Callback, EarlyStopping, ModelCheckpoint, warnings
 from keras import backend as K
 from AUC_Tanya import IntervalEvaluation
-#from score_tool_DNN_resp import calc_roc
+# from score_tool_DNN_resp import calc_roc
 import numpy as np
-#import pdb
+# import pdb
 from sklearn import metrics
 import sys
 
@@ -18,8 +18,7 @@ def movingaverage(data, window_size):
 
 class LearningRateDecay(Callback):
     '''
-	reduces the learning rate every n_epochs
-
+    reduces the learning rate every n_epochs
     '''
     def __init__(self, decay, n_epochs, verbose=0):
         Callback.__init__(self)
@@ -48,13 +47,13 @@ class SavingIntermediateModel(Callback):
         experiments and to have intermediate weight values saved.
     '''
 
-    def __init__(self, validation, train, location = '', every_n=1, verbose=0):
+    def __init__(self, validation, train, location='', every_n=1, verbose=0):
         Callback.__init__(self)
         self.every_n = every_n
         self.verbose = verbose
         self.validation = validation
         self.train = train
-        #self.test = test
+        # self.test = test
         self.location = location
 
     def on_epoch_end(self, epoch, logs={}):
@@ -63,7 +62,7 @@ class SavingIntermediateModel(Callback):
 
         np.save(self.location + "learning_curve_validation.npy", self.validation.AUC)
         np.save(self.location + "learning_curve_train.npy", self.train.AUC)
-        #np.save(self.location + "_test.npy", self.test.AUC)
+        # np.save(self.location + "_test.npy", self.test.AUC)
 
         self.model.save_weights(self.location + "_weights.hdf5")
 
@@ -96,16 +95,16 @@ class AUCCallback(Callback):
             processed = []
             if self.data_type == 'train':
                 p = self.model.predict(self.data_x)
-                #pdb.set_trace()
+                # pdb.set_trace()
                 print(p)
                 p = np.transpose(p)[1]
-                processed.append(p) #p[0]
+                processed.append(p) # p[0]
 
             elif self.data_type == 'validation' or self.data_type == 'test':
                 for files in self.data_x:
                     p = self.model.predict(files, batch_size=self.batch_size, verbose=0)
                     p = np.transpose(p)[1]
-                    processed.append(p) #p[0]
+                    processed.append(p) # p[0]
             # Get the ROC values of network outputs
             auc_all = []
             x = []
@@ -119,24 +118,20 @@ class AUCCallback(Callback):
             if self.data_type == 'validation':
                 print('\nEpoch %05d: Validation AUC %f' % (epoch + 1, current_auc * 100))
 
-
-
                 if current_auc > self.best:
                     self.best = current_auc
                     self.model.save_weights(self.saving_model_name, overwrite=True)
                     print('Epoch %05d: Best Weights' % (epoch + 1))
                     print('New Best Validation AUC: %f' % (current_auc * 100))
 
-                  # prob=all_prob.append(current_auc)
-
-
+                    # prob=all_prob.append(current_auc)
+               
                 if epoch >= 2000:
                     self.model.stop_training = True
                     print('\nEpoch %05d: early stopping' % (epoch + 1))
                     self.model.load_weights(self.saving_model_name)
             if self.data_type == "test" or self.data_type == 'train':
                 print('Epoch %05d: %s AUC %f\n' % (epoch + 1, self.data_type, current_auc * 100))
-
 
             if self.data_type == "test" and self.model.stop_training == True:
                 self.model.load_weights(self.saving_model_name)
@@ -148,4 +143,3 @@ class AUCCallback(Callback):
                 auc_pp = calc_roc(processed, y)
                 print("AUC and Collar Calculation on Best Model")
                 np.save(self.saving_model_name[:-5], auc_pp)
-

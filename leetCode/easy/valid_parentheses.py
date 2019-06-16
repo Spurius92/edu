@@ -1,11 +1,14 @@
 # Runtime: 36 ms, faster than 90.03% of Python3 online submissions for Valid Parentheses.
 # Memory Usage: 13.2 MB, less than 61.23% of Python3 online submissions for Valid Parentheses.
 
+
 class Solution:
     def isValid(self, s: str) -> bool:
-        parens = {'(': ')',
-                    '{': '}',
-                    '[': ']'}
+        parens = {
+            '(': ')',
+            '{': '}',
+            '[': ']'
+            }
         stack = []
         for char in s:
             if char in parens:

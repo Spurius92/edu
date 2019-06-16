@@ -8,7 +8,7 @@ Inputs:
 '''
 
 
-def  poisson(n, p, m):
+def poisson(n, p, m):
 	lambd = n * p
 	fact = np.math.factorial(m)
 	answer = (lambd ** m) / fact * np.e ** (-lambd)

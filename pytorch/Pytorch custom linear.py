@@ -1,4 +1,4 @@
-#utf-8
+# utf-8
 # custom class for nn.Linear in PyTorch
 
 import torch
@@ -20,4 +20,3 @@ class Linear(nn.Module):
 
     def forward(self, input):
         return F.lin(input, self.weight, self.bias)
-        

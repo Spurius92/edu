@@ -24,17 +24,18 @@ class IntervalEvaluation(Callback):
 
     def on_epoch_end(self, epoch, logs={}):
         if epoch % self.interval == 0:
-            #auc for traibn data
+            # auc for traibn data
             y_pred_train = self.model.predict(self.X_train, verbose=0)
             score_train = roc_auc_score(self.y_train, y_pred_train)
             self.auc_train.append(score_train)
-            #auc for validation data
+            # auc for validation data
             y_pred = self.model.predict(self.X_val, verbose=0)
             score = roc_auc_score(self.y_val, y_pred)
             self.auc.append(score)
             print("epoch: {:d} - roc_auc_score train: {:.6f}".format(epoch, score_train))
             print("epoch: {:d} - roc_auc_score val: {:.6f}".format(epoch, score))
-            #logging.info("epoch: {:d} - score: {:.6f}".format(epoch, score))
+            logging.info("epoch: {:d} - score: {:.6f}".format(epoch, score))
+
 
 # (snip)
 """
@@ -45,5 +46,5 @@ if __name__ == '__main__':
 
     clf = keras_model(input_size=X_train.shape[1])
     clf.fit(X_train, y_train, nb_epoch=100, batch_size=128, verbose=0, callbacks=[ival])
-    
-"""   
+
+"""

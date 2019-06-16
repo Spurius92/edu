@@ -1,4 +1,5 @@
 """
+Utility script by Artgor
 This script contains functions used in my kernels in Jigsaw challenge.
 I'll try to reference all the authors, whose code I used. If I missed someone - write to me, I'll fix it.
 
@@ -294,7 +295,7 @@ def load_preprocessing_data() -> dict:
         path = '../input/jigsaw-public-files/mapping_dict.json'
     else:
         path = '../input/mapping_dict.json'
-        
+ 
     with open(path, 'r') as f:
         mapping_dict = json.load(f)
 
@@ -437,7 +438,7 @@ def train_model(model, loaders, loss_fn, lr=0.001,
         if validate:
 
             valid_preds = np.zeros((len(loaders['valid_loader'].dataset), 1))
-            for step, (seq_batch, y_batch) in tqdm(enumerate(loaders['valid_loader'])):
+            for i, (seq_batch, y_batch) in tqdm(enumerate(loaders['valid_loader'])):
                 y_pred = sigmoid(model(seq_batch).detach().cpu().numpy())
                 valid_preds[i * batch_size:i * batch_size + y_pred.shape[0], :] = y_pred[:, :1]
                 val_loss += loss_fn(y_pred, y_batch).item() / len(loaders['valid_loader'])

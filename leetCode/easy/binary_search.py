@@ -1,16 +1,16 @@
 class Solution:
     """
     Non-recursive solution, given by `Sashulya` on YouTube.
-    
+
     """
     def search(self, nums: list[int], target: int) -> int:
-        l = 0
-        r = len(nums)
-        while l + 1 < r:
-            m = l + (r - l) // 2
-            if nums[m] > target:
-                r = m
+        left = 0
+        right = len(nums)
+        while left + 1 < right:
+            med = left + (right - left) // 2
+            if nums[med] > target:
+                right = med
             else:
-                l = m
+                left = med
 
-        return l if nums[l] == target else -1
+        return left if nums[left] == target else -1

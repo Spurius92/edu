@@ -5,6 +5,7 @@ from math import exp
 Veeery simple neural net from Tarik Rashid's book 'making your own neural network'
 '''
 
+
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size, lr):
         self.w1 = np.random.normal(0.0, np.power(hidden_size, -0.5), (input_size, hidden_size))
@@ -26,8 +27,6 @@ class NeuralNetwork:
 
         self.error = labels - self.y2
 
-
-
     def backward(self):
         self.dw2 = np.dot(self.w2.T, self.error)
         self.w2 += self.lr * np.dot(self.error, (self.y2 * (1 - self.y2)))
@@ -36,5 +35,3 @@ class NeuralNetwork:
 
     def __call__(self, x, y):
         return self.forward(x, y)
-
-

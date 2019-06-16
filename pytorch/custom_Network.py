@@ -1,8 +1,9 @@
 # Neural Network from YouTube channel DeepLizard
 
-import torch
+# import torch
 import torch.nn as nn
-import torch.functional as F
+# import torch.functional as F
+
 
 class Network(nn.Module):
     def __init__(self):

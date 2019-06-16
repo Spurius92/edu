@@ -1,4 +1,6 @@
 #this is not optimal solution for another LeetCode challenge
+
+
 class Solution:
     def isPalindrome(self, x: int) -> bool:
         x = str(x)
@@ -6,4 +8,3 @@ class Solution:
             return True
         else:
             return False
-        

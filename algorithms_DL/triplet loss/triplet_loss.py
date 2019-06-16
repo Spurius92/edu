@@ -1,5 +1,6 @@
 import torch
 
+
 def pairwise_distances(embeddings, squared=False):
 	"""
 	||a-b||^2 = |a|^2 - 2*<a,b> + |b|^2
@@ -23,6 +24,7 @@ def pairwise_distances(embeddings, squared=False):
 
 	return distances
 
+
 def get_valid_positive_mask(labels):
 	"""
 	To be a valid positive pair (a,p),
@@ -36,6 +38,7 @@ def get_valid_positive_mask(labels):
 
 	mask = indices_not_equal & label_equal
 	return mask
+
 
 def get_valid_negative_mask(labels):
 	"""
@@ -74,6 +77,7 @@ def get_valid_triplets_mask(labels):
 	mask = distinct_indices & valid_labels
 	return mask
 
+
 def batch_all_triplet_loss(labels, embeddings, margin, squared=False):
 	"""
 	get triplet loss for all valid triplets and average over those triplets whose loss is positive.
@@ -101,6 +105,7 @@ def batch_all_triplet_loss(labels, embeddings, margin, squared=False):
 
 	return triplet_loss, fraction_positive_triplets
 
+
 def batch_hard_triplet_loss(labels, embeddings, margin, squared=False):
 	"""
 	- compute distance matrix
@@ -122,16 +127,3 @@ def batch_hard_triplet_loss(labels, embeddings, margin, squared=False):
 	triplet_loss = triplet_loss.mean()
 
 	return triplet_loss
-
-
-
-
-
-
-
-
-
-
-
-
-

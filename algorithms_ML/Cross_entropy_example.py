@@ -1,4 +1,4 @@
-from  random import choices
+from random import choices
 from math import log2
 
 '''
