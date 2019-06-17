@@ -1,0 +1,4 @@
+pytest
+tox
+nox
+flake8

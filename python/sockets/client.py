@@ -19,7 +19,7 @@ while True:
         full_msg += msg.decode("utf-8")
 
         print(len(full_msg))
-    
+
         if len(full_msg) - HEADERSIZE == msglen:
             print('Full message recieved!')
             print(full_msg[HEADERSIZE:])

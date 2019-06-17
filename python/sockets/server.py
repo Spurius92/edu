@@ -13,7 +13,7 @@ while True:
     msg = "Welcome to the server!"
     msg = f'{msg:<{HEADERSIZE}}' + msg
 
-    clientsocket.send(bytes(msg,"utf-8"))
+    clientsocket.send(bytes(msg, "utf-8"))
 
     while True:
         time.sleep(3)
@@ -22,4 +22,4 @@ while True:
 
         print(msg)
 
-        clientsocket.send(bytes(msg,"utf-8"))
+        clientsocket.send(bytes(msg, "utf-8"))
