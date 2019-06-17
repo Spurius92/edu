@@ -3,7 +3,10 @@ import time
 from multiprocessing import Process, Lock, Value
 from multiprocessing import log_to_stderr, get_logger
 
+from logtime import logtime
 
+
+@logtime
 def add_500_lock(total, lock):
     for i in range(100):
         time.sleep(0.01)
@@ -12,6 +15,7 @@ def add_500_lock(total, lock):
         lock.release()
 
 
+@logtime
 def sub_500_lock(total, lock):
     for i in range(100):
         time.sleep(0.01)

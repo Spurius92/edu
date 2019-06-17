@@ -1,4 +1,6 @@
 pytest
+pytest-benchmark
+bandit
 tox
 nox
 flake8
