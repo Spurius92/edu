@@ -16,4 +16,3 @@
 5. `sudo nvidia-xconfig --no-use-edid-dpi`
 
 6. `sudo nano /etc/X11/xorg.conf` and add in the Monitor section `Option "DPI" "96 x 96"`
-https://github.com/Spurius92/edu.git
