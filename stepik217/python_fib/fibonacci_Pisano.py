@@ -7,8 +7,9 @@ def fib_mod(n, m):
         a, b = b % 10, (a + b) % 10
         Fib_list.append(b)
         Pisano_list.append(b)
-    #c = m % 10
+    # c = m % 10
     return Pisano_list, Fib_list
+
 
 def main():
     n, m = map(int, input().split())

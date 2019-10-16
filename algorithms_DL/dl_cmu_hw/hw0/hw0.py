@@ -1,8 +1,7 @@
 import numpy as np
 import os
 import time
-import torch    
-    
+import torch
 
 
 def sumproducts(x, y):
@@ -22,8 +21,6 @@ def sumproducts(x, y):
     return result
 
 
-
-
 def vectorize_sumproducts(x, y):
     """
     x is a 1-dimensional int numpy array. Shape of x is (N, ).
@@ -34,8 +31,7 @@ def vectorize_sumproducts(x, y):
     20236502250000
 
     """
-    # Write the vecotrized version here
-    pass
+    return np.sum(x * y)
 
 
 def Relu(x):
@@ -51,14 +47,14 @@ def Relu(x):
                 result[i][j] = 0
     return result
 
+
 def vectorize_Relu(x):
     """
     x is a 2-dimensional int numpy array.
     Return x[i][j] = 0 if < 0 else x[i][j] for all pairs of indices i, j.
 
     """
-    # Write the vecotrized version here
-    pass
+    return np.where(x >= 0, x, 0)
 
 
 def ReluPrime(x):
@@ -83,17 +79,20 @@ def vectorize_PrimeRelu(x):
     Return x[i][j] = 0 if x[i][j] < 0 else 1 for all pairs of indices i, j.
 
     """
-    # Write the vecotrized version here
-    pass  
+    return np.where(x >= 0, x, 0)
 
 
 def slice_fixed_point(x, l, start_point):
     """
-    x is a 3-dimensional int numpy array, (n, ). First dimension represent the number of instances in the array.
-    Second dimension is variable, depending on the length of a given instance. Third dimension is fixed
+    x is a 3-dimensional int numpy array, (n, ).
+    First dimension represent the number of instances in the array.
+    Second dimension is variable, depending on the length of a given instance.
+    Third dimension is fixed
     to the number of features extracted per utterance in an instance.
-    l is an integer representing the length of the utterances that the final array should have.
-    start_point is an integer representing the point at which the final utterance should start in.
+    l is an integer representing the length of the utterances that
+    the final array should have.
+    start_point is an integer representing the point
+    at which the final utterance should start in.
     Return a 3-dimensional int numpy array of shape (n, l, -1)
 
     """
@@ -102,10 +101,13 @@ def slice_fixed_point(x, l, start_point):
 
 def slice_last_point(x, l):
     """
-    x is a 3-dimensional int numpy array, (n, ). First dimension represent the number of instances in the array.
-    Second dimension is variable, depending on the length of a given instance. Third dimension is fixed
+    x is a 3-dimensional int numpy array, (n, ).
+    First dimension represent the number of instances in the array.
+    Second dimension is variable, depending on the length of a given instance.
+    Third dimension is fixed
     to the number of features extracted per utterance in an instance.
-    l is an integer representing the length of the utterances that the final array should be in.
+    l is an integer representing the length of the utterances that
+    the final array should be in.
     Return a 3-dimensional int numpy array of shape (n, l, -1)
 
     """
@@ -114,10 +116,13 @@ def slice_last_point(x, l):
 
 def slice_random_point(x, l):
     """
-    x is a 3-dimensional int numpy array, (n, ). First dimension represent the number of instances in the array.
-    Second dimension is variable, depending on the length of a given instance. Third dimension is fixed
+    x is a 3-dimensional int numpy array, (n, ).
+    First dimension represent the number of instances in the array.
+    Second dimension is variable, depending on the length of a given instance.
+    Third dimension is fixed
     to the number of features extracted per utterance in an instance.
-    l is an integer representing the length of the utterances that the final array should be in.
+    l is an integer representing the length of the utterances that
+    the final array should be in.
     Return a 3-dimensional int numpy array of shape (n, l, -1)
 
     """
@@ -126,21 +131,24 @@ def slice_random_point(x, l):
 
 def pad_pattern_end(x):
     """
-    x is a 3-dimensional int numpy array, (n, ). First dimension represent the number of instances in the array.
-    Second dimension is variable, depending on the length of a given instance. Third dimension is fixed
-    to the number of features extracted per utterance in an instance.
+    x is a 3-dimensional int numpy array, (n, ).
+    First dimension represent the number of instances in the array.
+    Second dimension is variable, depending on the length of a given instance.
+    Third dimension is fixed to the number of features extracted
+    per utterance in an instance.
 
     Return a 3-dimensional int numpy array.
 
     """
     pass
-    
 
 
 def pad_constant_central(x, c_):
     """
-    x is a 3-dimensional int numpy array, (n, ). First dimension represent the number of instances in the array.
-    Second dimension is variable, depending on the length of a given instance. Third dimension is fixed
+    x is a 3-dimensional int numpy array, (n, ).
+    First dimension represent the number of instances in the array.
+    Second dimension is variable, depending on the length of a given instance.
+    Third dimension is fixed
     to the number of features extracted per utterance in an instance.
 
     Return a 3-dimensional int numpy array.
@@ -149,24 +157,25 @@ def pad_constant_central(x, c_):
     pass
 
 
-
 def numpy2tensor(x):
     """
-    x is an numpy nd-array. 
+    x is an numpy nd-array.
 
     Return a pytorch Tensor of the same shape containing the same data.
     """
-    pass
+    return torch.from_numpy(x)
+
 
 def tensor2numpy(x):
     """
-    x is a pytorch Tensor. 
+    x is a pytorch Tensor.
 
     Return a numpy nd-array of the same shape containing the same data.
     """
-    pass
+    return np.array(x)
 
-def tensor_sumproducts(x,y):
+
+def tensor_sumproducts(x, y):
     """
     x is an n-dimensional pytorch Tensor.
     y is an n-dimensional pytorch Tensor.
@@ -175,20 +184,22 @@ def tensor_sumproducts(x,y):
     """
     pass
 
+
 def tensor_ReLU(x):
     """
-    x is a pytorch Tensor. 
-    For every element i in x, apply the ReLU function: 
+    x is a pytorch Tensor.
+    For every element i in x, apply the ReLU function:
     RELU(i) = 0 if i < 0 else i
 
     Return a pytorch Tensor of the same shape as x containing RELU(x)
     """
-    pass        
+    pass
+
 
 def tensor_ReLU_prime(x):
     """
-    x is a pytorch Tensor. 
-    For every element i in x, apply the RELU_PRIME function: 
+    x is a pytorch Tensor.
+    For every element i in x, apply the RELU_PRIME function:
     RELU_PRIME(i) = 0 if i < 0 else 1
 
     Return a pytorch Tensor of the same shape as x containing RELU_PRIME(x)

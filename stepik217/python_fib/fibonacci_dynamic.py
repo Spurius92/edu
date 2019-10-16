@@ -6,12 +6,14 @@ def dynamic_fib(n):
     a = 0
     b = 1
     for i in range(n):
-        a , b = b%10, (a + b) % 10
+        a, b = b % 10, (a + b) % 10
     return b
 
+
 def main():
-    n= int(input())
+    n = int(input())
     print(dynamic_fib(n))
-        
+
+    
 if __name__ == '__main__':
     main()

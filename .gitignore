@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.exe
 
 # Distribution / packaging
 .Python
@@ -104,3 +105,4 @@ venv.bak/
 .mypy_cache/
 
 .vscode
+__pycache__/

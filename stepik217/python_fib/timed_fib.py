@@ -1,5 +1,6 @@
 import time
 
+
 def timed(f, *args, n_iter=100):
     acc = float("inf")
     for i in range(n_iter):
@@ -10,6 +11,7 @@ def timed(f, *args, n_iter=100):
 
     return acc
 
+
 def main():
     n = int(input())
     print(timed())
@@ -17,4 +19,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-  
