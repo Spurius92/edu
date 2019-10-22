@@ -8,7 +8,7 @@
 2. `sudo apt install ubuntu-drivers-common` and `ubuntu-drivers devices`
   It showed the available options for installation: only nvidia-340, which is good
 
-3. `sudo add-apt-repository ppa:graphics-drivers/ppa` added repository for graphics drivers
+3. `sudo add-apt-repository ppa:graphics-drivers` added repository for graphics drivers
   It didn't help in my case
 
 4. `sudo apt install nvidia-340`

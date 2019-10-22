@@ -4,3 +4,4 @@ scikit-learn
 sympy
 scipy
 numba
+sympy

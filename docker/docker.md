@@ -14,10 +14,9 @@
 
    `-p` means port. First comes host port, second: docker container port
 
-    colon indicates using a particular folder as a volume for the container
-
 4. `docker build -t my_notebook .`
 
 5. `docker run -v /Users/glebmikh/Desktop/docker:/home/jovyan/ -p 8888:8888 my_notebook`
+ colon indicates using a particular folder as a volume for the container
 
 6. `docker-compose up`
