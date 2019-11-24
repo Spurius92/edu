@@ -3,3 +3,4 @@ requests
 selenium
 lxml
 Scrapy
+flake8

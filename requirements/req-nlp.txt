@@ -1,6 +1,7 @@
 pandas
 scikit-learn
-torch
-torchtext
 nltk
 gensim
+pymorphy
+jupyterlab
+flake8

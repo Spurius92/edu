@@ -1,14 +1,14 @@
 import time
-from contextlib import contextmanager
+# from contextlib import contextmanager
 
 
-@contextmanager
-def timer(msg):
+# @contextmanager
+def timer(func):
     t0 = time.time()
-    print(f'[{msg}] process started.')
-    yield
+    print(f'[{func.__name__}] process started.')
+    func()
     elapsed_time = time.time() - t0
-    print(f'[{msg}] done in {elapsed_time:.5f} sec.')
+    print(f'[{func.__name__}] speed test done in {elapsed_time:.5f} sec.')
 
 
 def perform_test(func):
@@ -19,4 +19,4 @@ def perform_test(func):
 
 
 # if __name__ == '__main__':
-    # perform_test(linear_search(data, target))
+#     perform_test(linear_search(data, target))

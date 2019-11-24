@@ -5,3 +5,9 @@ sympy
 scipy
 numba
 sympy
+category-encoders
+catboost
+lightgbm
+xgboost
+jupyterlab
+flake8
