@@ -6,7 +6,7 @@ Installed current version of it on Windows 10
 
 Instead of `psql` command i have to use `runpsql`, because this is how the script called, and i don't want to mess with this system
 
-## [Documentation](https://www.postgresql.org/docs/11/index.html))
+## [Documentation](https://www.postgresql.org/docs/11/index.html)
 
 ## Takeaways
 
